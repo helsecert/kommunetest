@@ -1,0 +1,108 @@
+#!/usr/bin/python3
+
+import subprocess
+from datetime import datetime
+import socket
+import requests
+import traceback
+
+RED = '\x1b[31m'
+GREEN = '\x1b[32m'
+RESET = '\x1b[0m'
+
+
+def get_ipv4_by_hostname(hostname):
+    return list(
+        i[4][0] for i in socket.getaddrinfo(hostname, 0)
+        if i[0] is socket.AddressFamily.AF_INET and i[1] is socket.SocketKind.SOCK_RAW
+    )
+
+
+def print_ok(*args, **kwargs):
+    time = datetime.now().isoformat()[:19]
+    OK = f"[{GREEN}OK{RESET}]   "
+    print(time, OK, *args, **kwargs)
+
+
+def print_error(*args, **kwargs):
+    time = datetime.now().isoformat()[:19]
+    ERROR = f"[{RED}ERROR{RESET}]"
+    print(time, ERROR, *args, **kwargs)
+
+
+def set_dns():
+    raise Exception("Setting av DNS-server ikke implementert!")  # TODO
+
+
+def start_tailscale_install(proxy):
+    try:
+        if not proxy:
+            result = subprocess.run(["/bin/sh", "-c", "curl -fsSL https://tailscale.com/install.sh | sh"])
+        else:
+            result = subprocess.run(["/bin/sh", "-c", f"curl -x {proxy} -fsSL https://tailscale.com/install.sh | sh"])
+    except Exception:
+        print_error("Error while installing tailscale.")
+        print(traceback.format_exc())
+
+
+def setup_forwarding():
+    try:
+        commands = [
+            "echo 'net.ipv4.ip_forward = 1' | sudo tee -a /etc/sysctl.conf"
+            "echo 'net.ipv6.conf.all.forwarding = 1' | sudo tee -a /etc/sysctl.conf"
+            "sudo sysctl -p /etc/sysctl.conf"
+        ]
+        for command in commands:
+            result = subprocess.run(["/bin/sh", "-c", command])
+        print_ok("IP forwarding enabled.")
+    except Exception:
+        print_error("Error while enabling forwarding.")
+        print(traceback.format_exc())
+
+
+def open_tailscale_tunnel(authkey, proxy):
+    try:
+        if not proxy:
+            result = subprocess.run(["sh", "-c", f"sudo tailscale up --advertise-routes=10.0.0.0/8,192.168.0.0/16,172.16.0.0/12 --auth-key={authkey}"])
+        else:
+            result = subprocess.run(["sh", "-c", f"https_proxy={proxy} sudo tailscale up --advertise-routes=10.0.0.0/8,192.168.0.0/16,172.16.0.0/12 --auth-key={authkey}"])
+    except Exception:
+        print_error("Error while starting tailscale.")
+        print(traceback.format_exc())
+
+
+def main():
+    print_ok("Sjekker lokale IP-adresser...")
+    subprocess.run("ip -o a".split())
+
+    print_ok("Sjekker DNS-tilgang: Prøver å slå opp paste.helsecert.no...")
+    paste_ipaddr = get_ipv4_by_hostname("paste.helsecert.no")
+    if len(paste_ipaddr) > 0:
+        print_ok("Fikk følgende IP-adresser som DNS-svar:", paste_ipaddr)
+    else:
+        print_error("Fikk ingen IP-adresser som DNS-svar.")
+        dns_server = input("Skriv inn IP-adresse til DNS-server (f.eks. domenekontroller): ")
+        set_dns(dns_server)
+
+    proxy = None
+    print_ok("Sjekker offentlig ip-adresse gjennom https://httpbin.org/ip ...")
+    try:
+        response = requests.get('https://httpbin.org/ip')
+        print_ok("Respons:", ''.join(line.strip() for line in response.text.splitlines()))
+    except Exception:
+        print_error("Klarte ikke koble til https://httpbin.org/ip")
+        proxy = input("Skriv inn proxy-server for tilgang til internett (https://hostname:port/):")
+
+    print_ok("Installerer tailscale:")
+    start_tailscale_install(proxy)
+    setup_forwarding()
+    tailscale_key = input("Tast inn authkey til VPN-tunnel, sendt på SMS fra HelseCERT: ")
+    print_ok("Starter tailscale:")
+    open_tailscale_tunnel(tailscale_key, proxy)
+
+    # TODO: Sjekk om tailscale kom opp og skriv:
+    print_ok("HURRA! VPN-tunnel er oppe.")
+
+
+if __name__ == "__main__":
+    main()

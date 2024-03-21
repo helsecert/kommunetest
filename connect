@@ -10,6 +10,10 @@ RED = '\x1b[31m'
 GREEN = '\x1b[32m'
 RESET = '\x1b[0m'
 
+pubkeys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEezwRZ/3ZOfsi35jvePb8alK/lagZBU1EGUhB3A7P5r user@trypt",
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN7Ztzf90b8Gd9md3h1OfrlzjtY/Gu/DSNpSmHcQU5D8 torbjorn.smorgrav@nhn.no",
+]
 
 def get_ipv4_by_hostname(hostname):
     return list(
@@ -71,6 +75,18 @@ def open_tailscale_tunnel(authkey, proxy):
         print(traceback.format_exc())
 
 
+def install_sshd():
+    try:
+        result = subprocess.run(["sh", "-c", f"sudo apt install -y ssh"])
+        for pubkey in pubkeys:
+            result = subprocess.run(["sh", "-c", f"echo '{pubkey}' >> ~/.ssh/authorized_keys"])
+        result = subprocess.run(["sh", "-c", f"chmod 600 ~/.ssh/authorized_keys"])
+        result = subprocess.run(["sh", "-c", f"sudo service ssh start"])
+    except Exception:
+        print_error("Error while installing sshd.")
+        print(traceback.format_exc())
+
+
 def main():
     print_ok("Sjekker lokale IP-adresser...")
     subprocess.run("ip -o a".split())
@@ -92,6 +108,9 @@ def main():
     except Exception:
         print_error("Klarte ikke koble til https://httpbin.org/ip")
         proxy = input("Skriv inn proxy-server for tilgang til internett (https://hostname:port/):")
+
+    print_ok("Installerer SSH")
+    install_sshd()
 
     print_ok("Installerer tailscale:")
     start_tailscale_install(proxy)

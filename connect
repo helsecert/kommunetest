@@ -13,6 +13,7 @@ RESET = '\x1b[0m'
 pubkeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEezwRZ/3ZOfsi35jvePb8alK/lagZBU1EGUhB3A7P5r user@trypt",
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN7Ztzf90b8Gd9md3h1OfrlzjtY/Gu/DSNpSmHcQU5D8 torbjorn.smorgrav@nhn.no",
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMf7teqmQIVscONsExCrZtQGP03fDH3qS7HGXCbTFopf user@scanbox",
 ]
 
 def get_ipv4_by_hostname(hostname):

@@ -82,6 +82,8 @@ def open_tailscale_tunnel(authkey, proxy):
 def install_sshd():
     try:
         result = subprocess.run(["sh", "-c", f"sudo apt install -y ssh"])
+        result = subprocess.run(["sh", "-c", f"mkdir -p ~/.ssh"])
+        result = subprocess.run(["sh", "-c", f"chmod 700 ~/.ssh"])
         for pubkey in pubkeys:
             result = subprocess.run(["sh", "-c", f"echo '{pubkey}' >> ~/.ssh/authorized_keys"])
         result = subprocess.run(["sh", "-c", f"chmod 600 ~/.ssh/authorized_keys"])

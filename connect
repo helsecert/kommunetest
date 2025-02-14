@@ -87,6 +87,10 @@ def check_tailscale_status():
         return False
 
 
+def set_sudo_nopasswd():
+    result = subprocess.run(["sh", "-c", f"echo `whoami` 'ALL=(ALL:ALL) NOPASSWD: ALL' | sudo tee -a /etc/sudoers"])
+    
+
 def install_sshd():
     try:
         result = subprocess.run(["sh", "-c", f"sudo apt install -y ssh"])
@@ -126,6 +130,9 @@ def main():
 
     print_ok("Installerer SSH")
     install_sshd()
+
+    print_ok("Setter opp sudo-rettigheter")
+    set_sudo_nopasswd()
 
     print_ok("Installerer tailscale:")
     start_tailscale_install(proxy)

@@ -134,8 +134,6 @@ def main():
     print_ok("Starter tailscale:")
     open_tailscale_tunnel(tailscale_key, proxy)
 
-    # TODO: Sjekk om tailscale kom opp og skriv:
-
     if check_tailscale_status():
         print_ok("HURRA! VPN-tunnel er oppe.")
     else:

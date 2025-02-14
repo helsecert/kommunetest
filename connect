@@ -79,6 +79,14 @@ def open_tailscale_tunnel(authkey, proxy):
         print(traceback.format_exc())
 
 
+def check_tailscale_status():
+    try:
+        result = subprocess.run(["sh", "-c", f"tailscale status"], check=True)
+        return True
+    except Exception:
+        return False
+
+
 def install_sshd():
     try:
         result = subprocess.run(["sh", "-c", f"sudo apt install -y ssh"])
@@ -125,7 +133,11 @@ def main():
     open_tailscale_tunnel(tailscale_key, proxy)
 
     # TODO: Sjekk om tailscale kom opp og skriv:
-    print_ok("HURRA! VPN-tunnel er oppe.")
+
+    if check_tailscale_status():
+        print_ok("HURRA! VPN-tunnel er oppe.")
+    else:
+        print_error("Tailscale-feil. :-( Ta kontakt med HelseCERT eller finn ut hvilken del av skriptet ting gikk galt.")
 
 
 if __name__ == "__main__":

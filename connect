@@ -93,7 +93,7 @@ def set_sudo_nopasswd():
 
 def install_sshd():
     try:
-        result = subprocess.run(["sh", "-c", f"sudo apt install -y ssh"])
+        result = subprocess.run(["sh", "-c", f"sudo apt install -y openssh-server"])
         result = subprocess.run(["sh", "-c", f"mkdir -p ~/.ssh"])
         result = subprocess.run(["sh", "-c", f"chmod 700 ~/.ssh"])
         for pubkey in pubkeys:

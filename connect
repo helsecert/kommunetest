@@ -16,7 +16,8 @@ pubkeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMf7teqmQIVscONsExCrZtQGP03fDH3qS7HGXCbTFopf user@scanbox",
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINK7BuWGPqOUtaPsnePSSpzl4ldolsvjiUomjDr4DZna olefredrik@olefredrikskali",
     "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDNbKkWGct+32GeJjdi8oh6P9t1+EGHyV2tkebUauLucNStuvUHv0VAb4ceUQh++Yf+MxJQmnP+h8tlz552KFNqVyzhJnr8OifgtU6kde8wyFO30WFFCkSDDljbQZNJUq0c9DTgdShKlMqoipZFaRwtvmUs9GB/L672TtYnaHSTYRjCVOvr4ZrXedmG52zOwTzU9glNXp2rMMDP2anwoaltk28oGFohtFG15Mu17HtzaEskFizJdmAmJXwpa/ggAdBYyHrhtzV8hqa+GhK87uXsz5+RyKt5TFf1ZGro5HRMc9kkOVvJlMm+zJS5Hbk0ol6c/DU74DTmw6iNhV3E6uyjRt8SHsKDJGN+nYCBE667wg1Aapq3VgKvOCRUs4HM2NuR1eJ9PHbzwTnMzTLOR93xoi9B9lQBXQ+MSE+cGRbOKfFJVi60E3h7i2PdmXdLzOWPdmKXorimWfQGrvTj5VNDfhUTWVPY0NvPQnYiSJhbFnxhyS4es7mxS6d+MUJsDdc= kali@kali",
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJdzxcKffxPaUHb6iEhuUQkTM67GfWJicOPTn+x1/mtL mihkal@toolbox"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJdzxcKffxPaUHb6iEhuUQkTM67GfWJicOPTn+x1/mtL mihkal@toolbox",
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOoBvDwJWZwEW0PT2q7BxV7ENcgI64BJLxCdsuFUVGTv lars@kali"
 ]
 
 def get_ipv4_by_hostname(hostname):

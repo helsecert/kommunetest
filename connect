@@ -17,9 +17,7 @@ pubkeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINK7BuWGPqOUtaPsnePSSpzl4ldolsvjiUomjDr4DZna olefredrik@olefredrikskali",
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAYqAp61PhgdVQU2Gi5CLw2AshR1y+cny2r8f79LmGRk kali@kali",
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJdzxcKffxPaUHb6iEhuUQkTM67GfWJicOPTn+x1/mtL mihkal@toolbox",
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOoBvDwJWZwEW0PT2q7BxV7ENcgI64BJLxCdsuFUVGTv lars@kali",
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFxUBveOS8sIfC+JIEz87Qr1iEezngLz4PbOt1FKNhXv Lars",
-    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC3/k21qOahk/WNazDrReEVcXvKDy3dYYPRwq8TQvMXPOcB52HkYfZZNF2w5LC2R4CXSFH/ZKnIql8cAh5iyDEXHZZexoOYFka5FNitzBx/10IegrNIT8AUlWitNY7HU0NkB2muZ5MzUg3XOMhheQ6QqKl/5zFFhLJoZf2sfYs2NVaRv92hmwqmGQXWsZX8CfDvnSHgGU89tM6xi/PGduGtiO1491Ct6GpW7GrRU9EO/pgcloJpDhzeMsNu/3goGolSrlXKbGfOUMz3+JeE++9fYc0zp2Rn2/T00aoYsdwQPKRuopiyvOAyaC6nY/qGGDhOxzrvHGOPN+RHvrDNT/u+jdxTIBGGShs5WBi042Lve5iotThn/95HqKvQTz/zAGUszpMMXaQ57iCwCM3P2La8ezlwk8On6O2I00LjwZIWvJ8kPgvSCpehZTWH77XEJeLqAq4VlbMLO46PEqeD0ElV1REll9xQb3OJ6cGLo4pg1F3SD9vfrsiSh0rsOjMI660/9knDTrOY6xOPI1ggYI0MfbNOqC/d6AcjFhii2kcGERkkmpwlyWGErTovFGJGoWCC83vjLR0fc2VCsVj4TNnLIpNVi9zMzKHCNUd0TNmPG1OPKz+xlWnM2HYSoeTWMPubK7RNYKAGpmhJ2zcaPPYYM0cAPTqQmD/OZqZ8aMoqMw== lars@lars-kali"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDTAmGyfNpIR27ts1QEyOezZDVwaf+wz6CGQaLz1S9wo lars.markussen@pm",
 ]
 
 def get_ipv4_by_hostname(hostname):
@@ -140,7 +138,7 @@ def main():
     print_ok("Installerer tailscale:")
     start_tailscale_install(proxy)
     setup_forwarding()
-    tailscale_key = input("Tast inn authkey til VPN-tunnel, sendt på SMS fra HelseCERT: ")
+    tailscale_key = input("Tast inn authkey til VPN-tunnel fra portal.helsecert.no: ")
     print_ok("Starter tailscale:")
     open_tailscale_tunnel(tailscale_key, proxy)
 

@@ -18,6 +18,7 @@ pubkeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAYqAp61PhgdVQU2Gi5CLw2AshR1y+cny2r8f79LmGRk kali@kali",
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJdzxcKffxPaUHb6iEhuUQkTM67GfWJicOPTn+x1/mtL mihkal@toolbox",
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDTAmGyfNpIR27ts1QEyOezZDVwaf+wz6CGQaLz1S9wo lars.markussen@pm",
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAmc83YO+6seXb5Nm8fFtLUhfbFgXCmqfTmStsNeC2Ra lars.markussen@nhn.no",
 ]
 
 def get_ipv4_by_hostname(hostname):
